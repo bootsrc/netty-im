@@ -1,0 +1,7 @@
+syntax = "proto3";
+option java_outer_classname = "MessageProto";
+message Message {
+  string id = 1;
+  string content = 2;
+  int32 type = 3;
+}
