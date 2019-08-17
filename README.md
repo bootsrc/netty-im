@@ -1,5 +1,12 @@
 # netty-im
 
+protobuf 请安装3.6.1版本。 因为过于新的版本生成的java代码会报错。
+
+```shell script
+protoc --version
+libprotoc 3.6.1
+```
+执行如下命令可以根据message.proto来生成MessageProto.java文件
 ```text
 cd "fmessage.proto path"
 protoc --java_out=. message.proto
@@ -14,3 +21,36 @@ IdleState.READER_IDLE事件，如果触发了IdleState.READER_IDLE事件就说�
 ```
 
 参考链接见 [链接](http://cxytiandi.com/blog/detail/18044)
+
+## 演示步骤
+Step1 启动ImClientApp,  观察日志
+```text
+服务端链接不上，开始重连操作...
+服务端链接不上，开始重连操作...
+服务端链接不上，开始重连操作...
+服务端链接不上，开始重连操作...
+服务端链接不上，开始重连操作...
+
+```
+说明来一旦链接失败后会重连
+
+Step2 等待几秒钟后，再启动ImServerApp,观察日志
+```text
+服务端链接成功...
+长期未向服务器发送数据
+Send heartbeat, heartBeatMsg=type: 1
+
+client:
+
+长期未向服务器发送数据
+Send heartbeat, heartBeatMsg=type: 1
+```
+
+Step3, 关闭ImServerApp, 日志
+```text
+掉线了...
+服务端链接不上，开始重连操作...
+服务端链接不上，开始重连操作...
+```
+
+Step4, 启动ImServerApp，观察日志，发现又自动连接上了。
